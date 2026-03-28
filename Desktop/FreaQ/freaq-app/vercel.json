@@ -1,0 +1,28 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["iad1", "sin1", "hnd1", "cdg1", "syd1"],
+  "env": {
+    "NEXTAUTH_URL": "@freaq_nextauth_url",
+    "NEXTAUTH_SECRET": "@freaq_nextauth_secret",
+    "FINNHUB_API_KEY": "@freaq_finnhub_key",
+    "OPENAI_API_KEY": "@freaq_openai_key",
+    "GITHUB_ID": "@freaq_github_id",
+    "GITHUB_SECRET": "@freaq_github_secret",
+    "GOOGLE_CLIENT_ID": "@freaq_google_id",
+    "GOOGLE_CLIENT_SECRET": "@freaq_google_secret"
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ]
+}
