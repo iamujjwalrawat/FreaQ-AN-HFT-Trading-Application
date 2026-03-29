@@ -60,8 +60,8 @@ export default function OrderBook({ symbol, exchange }: Props) {
   const [trades, setTrades] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState<'chart' | 'orderbook' | 'trades'>('chart');
-  const [orderType, setOrderType] = useState<'market' | 'limit'>('market');
-  const [orderSide, setOrderSide] = useState<'buy' | 'sell'>('buy');
+  const [orderType, setOrderType] = useState<'market' | 'limit' | 'iceberg' | 'ioc' | 'fok'>('market');
+  const [orderSide, setOrderSide] = useState<'buy' | 'sell' | 'short'>('buy');
   const [orderQty, setOrderQty] = useState('10');
   const [orderPrice, setOrderPrice] = useState('');
   const [orderStatus, setOrderStatus] = useState('');
@@ -386,13 +386,13 @@ export default function OrderBook({ symbol, exchange }: Props) {
         <div className="p-4 border-b border-border">
           <h3 className="font-bold text-text-primary mb-3">⚡ Place Order</h3>
 
-          {/* Buy/Sell Toggle */}
+          {/* Buy/Sell/Short Toggle */}
           <div className="flex rounded-xl overflow-hidden border border-border mb-4">
             <button
               id="order-buy-btn"
               onClick={() => setOrderSide('buy')}
               className={`flex-1 py-2.5 text-sm font-semibold transition-colors ${
-                orderSide === 'buy' ? 'bg-accent-green text-black' : 'text-text-secondary hover:text-text-primary'
+                orderSide === 'buy' ? 'bg-accent-green text-black' : 'text-text-secondary hover:text-text-primary bg-surface'
               }`}
             >
               BUY
@@ -400,44 +400,79 @@ export default function OrderBook({ symbol, exchange }: Props) {
             <button
               id="order-sell-btn"
               onClick={() => setOrderSide('sell')}
-              className={`flex-1 py-2.5 text-sm font-semibold transition-colors ${
-                orderSide === 'sell' ? 'bg-accent-red text-white' : 'text-text-secondary hover:text-text-primary'
+              className={`flex-1 py-2.5 text-sm font-semibold transition-colors border-l border-r border-border ${
+                orderSide === 'sell' ? 'bg-accent-red text-white' : 'text-text-secondary hover:text-text-primary bg-surface'
               }`}
             >
               SELL
             </button>
+            <button
+              id="order-short-btn"
+              onClick={() => setOrderSide('short')}
+              className={`flex-1 py-2.5 text-sm font-semibold transition-colors ${
+                orderSide === 'short' ? 'bg-accent-purple text-white' : 'text-text-secondary hover:text-text-primary bg-surface'
+              }`}
+            >
+              SHORT
+            </button>
           </div>
 
-          {/* Order Type */}
-          <div className="flex gap-2 mb-4">
-            {(['market', 'limit'] as const).map(type => (
+          {/* Proprietary HFT Order Types */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {(['market', 'limit', 'iceberg', 'ioc', 'fok'] as const).map(type => (
               <button
                 key={type}
                 id={`order-type-${type}`}
                 onClick={() => setOrderType(type)}
-                className={`flex-1 py-1.5 text-xs rounded-lg border transition-colors capitalize ${
+                className={`flex-1 min-w-[60px] py-1.5 text-xs font-bold rounded-lg border transition-colors uppercase ${
                   orderType === type
-                    ? 'border-accent-blue bg-accent-blue bg-opacity-20 text-accent-blue'
-                    : 'border-border text-text-secondary hover:text-text-primary'
+                    ? 'border-accent-blue bg-accent-blue bg-opacity-20 text-accent-cyan'
+                    : 'border-border text-text-secondary hover:text-text-primary hover:border-text-secondary'
                 }`}
+                title={
+                  type === 'iceberg' ? 'Hide true order size in the book' :
+                  type === 'ioc' ? 'Immediate Or Cancel' :
+                  type === 'fok' ? 'Fill Or Kill' : ''
+                }
               >
                 {type}
               </button>
             ))}
           </div>
 
-          {/* Price Input (for limit orders) */}
-          {orderType === 'limit' && (
+          {/* Price Input (for non-market orders) */}
+          {orderType !== 'market' && (
             <div className="mb-3">
-              <label className="text-xs text-text-muted mb-1 block">Limit Price ($)</label>
+              <label className="text-xs text-text-muted mb-1 flex justify-between">
+                <span>{orderType === 'iceberg' ? 'Display Price' : 'Limit Price'} ($)</span>
+                {orderType === 'iceberg' && <span className="text-accent-blue">Nanosecond routing enabled</span>}
+              </label>
               <input
                 id="order-price-input"
                 type="number"
                 value={orderPrice}
                 onChange={(e) => setOrderPrice(e.target.value)}
-                className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2.5 text-sm font-mono text-text-primary"
+                className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2.5 text-sm font-mono text-text-primary focus:border-accent-blue outline-none"
                 placeholder={quote?.price?.toFixed(2) || '0.00'}
                 step="0.01"
+              />
+            </div>
+          )}
+
+          {/* Hidden Size (for Iceberg) */}
+          {orderType === 'iceberg' && (
+            <div className="mb-3 relative group">
+              <label className="text-xs text-text-muted mb-1 flex items-center gap-1">
+                Display Size
+                <span className="text-[10px] bg-surface-elevated px-1 rounded cursor-help">?</span>
+              </label>
+              <div className="absolute left-0 -top-8 bg-surface border border-border text-xs p-2 rounded hidden group-hover:block w-full z-10 text-text-muted">
+                Only this fraction will show on L2 Orderbook. Rest is hidden.
+              </div>
+              <input
+                type="number"
+                className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2.5 text-sm font-mono text-text-primary"
+                placeholder="10% of Total"
               />
             </div>
           )}
@@ -476,13 +511,16 @@ export default function OrderBook({ symbol, exchange }: Props) {
           <button
             id="submit-order-btn"
             onClick={submitOrder}
-            className={`w-full font-bold py-3 rounded-xl text-sm transition-all ${
+            className={`w-full font-bold py-3.5 rounded-xl text-sm transition-all hover:scale-[1.02] shadow-lg flex justify-center items-center gap-2 ${
               orderSide === 'buy'
-                ? 'bg-accent-green hover:bg-green-400 text-black'
-                : 'bg-accent-red hover:bg-red-500 text-white'
+                ? 'bg-gradient-to-r from-accent-green to-green-500 text-black shadow-accent-green/20'
+                : orderSide === 'sell' 
+                  ? 'bg-gradient-to-r from-accent-red to-red-600 text-white shadow-accent-red/20'
+                  : 'bg-gradient-to-r from-accent-purple to-purple-600 text-white shadow-accent-purple/20'
             }`}
           >
-            {orderSide === 'buy' ? '🟢' : '🔴'} {orderType === 'market' ? 'Market' : 'Limit'} {orderSide.toUpperCase()} {symbol}
+            {orderSide === 'buy' ? '🟢' : orderSide === 'sell' ? '🔴' : '🟣'}{' '}
+            <span className="uppercase">{orderType} {orderSide}</span> {symbol}
           </button>
 
           {orderStatus && (

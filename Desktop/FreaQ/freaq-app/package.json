@@ -19,11 +19,13 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.48",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-toast": "^1.2.15",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
+    "ai": "^6.0.141",
     "autoprefixer": "^10.4.19",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

@@ -10,8 +10,9 @@ import TradingSimulator from './TradingSimulator';
 import NewsPanel from './NewsPanel';
 import AIAssistant from './AIAssistant';
 import Portfolio from './Portfolio';
+import SmartInvest from './SmartInvest';
 
-type Tab = 'overview' | 'trading' | 'portfolio' | 'news' | 'ai' | 'simulation' | 'game';
+type Tab = 'overview' | 'trading' | 'portfolio' | 'smart' | 'simulation' | 'game' | 'news' | 'ai';
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -78,6 +79,7 @@ export default function Dashboard() {
     { id: 'overview' as Tab, label: 'Overview', icon: '📊' },
     { id: 'trading' as Tab, label: 'Trading', icon: '⚡' },
     { id: 'portfolio' as Tab, label: 'Portfolio', icon: '💼' },
+    { id: 'smart' as Tab, label: 'Smart Invest', icon: '🎯' },
     { id: 'simulation' as Tab, label: 'Simulate', icon: '🎮' },
     { id: 'news' as Tab, label: 'News', icon: '📰' },
     { id: 'ai' as Tab, label: 'AI Analyst', icon: '🤖' },
@@ -288,6 +290,7 @@ export default function Dashboard() {
           {activeTab === 'overview' && <MarketOverview selectedSymbol={selectedSymbol} onSelectSymbol={(s) => { setSelectedSymbol(s); setActiveTab('trading'); }} />}
           {activeTab === 'trading' && <OrderBook symbol={selectedSymbol} exchange={selectedExchange} />}
           {activeTab === 'portfolio' && <Portfolio userId={session?.user?.email || 'demo'} />}
+          {activeTab === 'smart' && <SmartInvest />}
           {activeTab === 'simulation' && <TradingSimulator />}
           {activeTab === 'news' && <NewsPanel />}
           {activeTab === 'ai' && <AIAssistant selectedSymbol={selectedSymbol} />}

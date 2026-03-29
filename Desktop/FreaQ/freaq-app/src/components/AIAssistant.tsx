@@ -13,9 +13,9 @@ const QUICK_PROMPTS = [
   'How to read an order book?',
   'What is statistical arbitrage?',
   'Tell me about BSE & NSE markets',
-  'Bitcoin trading strategies',
-  'How to calculate Sharpe ratio?',
-  'What moves stock prices?',
+  'How to copy trade top hedge funds?',
+  'Analyze Citadel and Two Sigma strategies',
+  'How to measure latency arbitrage?',
   'Explain VIX and volatility',
 ];
 
