@@ -12,7 +12,7 @@ import AIAssistant from './AIAssistant';
 import Portfolio from './Portfolio';
 import SmartInvest from './SmartInvest';
 
-type Tab = 'overview' | 'trading' | 'portfolio' | 'smart' | 'simulation' | 'game' | 'news' | 'ai';
+type Tab = 'overview' | 'trading' | 'portfolio' | 'smart' | 'ai';
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -77,13 +77,10 @@ export default function Dashboard() {
 
   const tabs = [
     { id: 'overview' as Tab, label: 'Overview', icon: '📊' },
-    { id: 'trading' as Tab, label: 'Trading', icon: '⚡' },
+    { id: 'smart' as Tab, label: 'Smart Invest & Copying', icon: '🎯' },
+    { id: 'trading' as Tab, label: 'Execution', icon: '⚡' },
     { id: 'portfolio' as Tab, label: 'Portfolio', icon: '💼' },
-    { id: 'smart' as Tab, label: 'Smart Invest', icon: '🎯' },
-    { id: 'simulation' as Tab, label: 'Simulate', icon: '🎮' },
-    { id: 'news' as Tab, label: 'News', icon: '📰' },
     { id: 'ai' as Tab, label: 'AI Analyst', icon: '🤖' },
-    { id: 'game' as Tab, label: 'Game', icon: '🏆' },
   ];
 
   return (
@@ -288,13 +285,10 @@ export default function Dashboard() {
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
           {activeTab === 'overview' && <MarketOverview selectedSymbol={selectedSymbol} onSelectSymbol={(s) => { setSelectedSymbol(s); setActiveTab('trading'); }} />}
-          {activeTab === 'trading' && <OrderBook symbol={selectedSymbol} exchange={selectedExchange} />}
-          {activeTab === 'portfolio' && <Portfolio userId={session?.user?.email || 'demo'} />}
           {activeTab === 'smart' && <SmartInvest />}
-          {activeTab === 'simulation' && <TradingSimulator />}
-          {activeTab === 'news' && <NewsPanel />}
+          {activeTab === 'trading' && <div className="p-4 h-full"><OrderBook symbol={selectedSymbol} exchange={selectedExchange} /></div>}
+          {activeTab === 'portfolio' && <Portfolio userId={session?.user?.email || 'demo'} />}
           {activeTab === 'ai' && <AIAssistant selectedSymbol={selectedSymbol} />}
-          {activeTab === 'game' && <TradingGame />}
         </main>
       </div>
     </div>
