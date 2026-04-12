@@ -170,29 +170,37 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-6 matrix-bg grid-bg overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute w-96 h-96 bg-accent-blue rounded-full filter blur-3xl opacity-5 transition-all duration-300"
-            style={{ left: mousePos.x - 192, top: mousePos.y - 192 }}
-          ></div>
-          <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-accent-cyan rounded-full filter blur-3xl opacity-5 animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-accent-purple rounded-full filter blur-3xl opacity-5 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden">
+        {/* Animated background logo */}
+        <div className="absolute inset-0 pointer-events-none flex auto items-center justify-center -z-10">
+          <div className="w-[800px] h-[800px] opacity-[0.03] scale-150 animate-spin-slow mix-blend-screen filter blur-lg">
+            <Logo width={800} height={800} />
+          </div>
         </div>
 
-        <div className="max-w-6xl mx-auto text-center relative z-10">
+        {/* Ambient lighting */}
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-accent-cyan/10 rounded-full filter blur-[120px] mix-blend-screen opacity-50"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] bg-accent-red/10 rounded-full filter blur-[120px] mix-blend-screen opacity-50 animate-pulse"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto text-center relative z-10 flex flex-col items-center">
+          {/* Central Logo Display */}
+          <div className="mb-8 relative group">
+            <div className="absolute inset-0 bg-accent-cyan/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <Logo width={160} height={160} className="relative z-10 transform hover:scale-105 transition-transform duration-500 drop-shadow-2xl" />
+          </div>
+
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-accent-blue bg-opacity-10 border border-accent-blue border-opacity-30 rounded-full px-4 py-2 text-sm text-accent-cyan mb-8">
-            <span className="w-2 h-2 bg-accent-green rounded-full live-dot"></span>
-            Open Source • MIT Licensed • Community Powered
+          <div className="inline-flex items-center gap-2 bg-surface-elevated border border-border rounded-full px-5 py-2.5 text-sm text-text-primary shadow-glass mb-8 backdrop-blur-xl">
+            <span className="w-2.5 h-2.5 bg-accent-cyan rounded-full live-dot shadow-[0_0_10px_#00F2FF]"></span>
+            Next-Gen Architecture • Obsidian Aesthetics
           </div>
 
           {/* Main heading */}
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black font-display mb-6 leading-none">
-            <span className="gradient-text">FreaQ</span>
-            <br />
-            <span className="text-text-primary">HFT Platform</span>
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black font-display mb-6 leading-none tracking-tight">
+            The Future of <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-blue drop-shadow-sm">High-Frequency</span>
           </h1>
 
           <p className="text-xl sm:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 leading-relaxed">
@@ -219,17 +227,19 @@ export default function LandingPage() {
             <button
               id="hero-demo-btn"
               onClick={() => signIn('credentials', { email: 'demo@freaq.io', password: 'demo123', callbackUrl: '/' })}
-              className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-accent-blue to-accent-cyan text-white font-bold px-8 py-4 rounded-2xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-accent-blue/30"
+              className="group relative overflow-hidden bg-surface-elevated border border-accent-cyan/50 text-white font-bold px-8 py-4 rounded-2xl text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(0,242,255,0.3)] backdrop-blur-xl"
             >
-              <span>🚀 Launch Demo</span>
-              <span className="text-opacity-80">Free • No signup needed</span>
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-accent-cyan/10 to-accent-blue/10 transform rotate-180 transition-all duration-500 opacity-0 group-hover:opacity-100" />
+              <span className="relative z-10 flex items-center gap-3">
+                <Logo width={24} height={24} className="opacity-80" /> Enter Terminal
+              </span>
             </button>
             <button
               id="hero-signin-btn"
               onClick={() => signIn()}
-              className="inline-flex items-center gap-2 border border-border hover:border-accent-blue text-text-primary font-semibold px-8 py-4 rounded-2xl text-lg transition-all duration-300 hover:bg-accent-blue hover:bg-opacity-10"
+              className="inline-flex items-center gap-2 glass text-text-primary font-semibold px-8 py-4 rounded-2xl text-lg transition-all duration-300 hover:bg-surface-elevated hover:border-accent-cyan/30"
             >
-              Sign In with Account →
+              Secure Login →
             </button>
           </div>
 
@@ -388,9 +398,9 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-xl">⚡</span>
-                <span className="font-bold gradient-text font-display">FreaQ</span>
+              <div className="flex items-center gap-3 mb-6">
+                <Logo width={40} height={40} />
+                <span className="font-bold text-2xl tracking-tight text-white">FreaQ</span>
               </div>
               <p className="text-text-muted text-sm leading-relaxed">
                 Open-source HFT platform for all global exchanges.

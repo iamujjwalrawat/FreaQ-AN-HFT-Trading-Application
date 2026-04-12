@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Dashboard from '@/components/Dashboard';
 import LandingPage from '@/components/LandingPage';
+import Logo from '@/components/Logo';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -12,15 +13,23 @@ export default function Home() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="relative w-20 h-20 mx-auto mb-6">
-            <div className="absolute inset-0 rounded-full border-2 border-accent-blue opacity-20"></div>
-            <div className="absolute inset-0 rounded-full border-t-2 border-accent-cyan animate-spin"></div>
-            <div className="absolute inset-2 rounded-full border-t-2 border-accent-green animate-spin" style={{ animationDuration: '1.5s' }}></div>
+      <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
+        {/* Animated background logo */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10">
+          <div className="w-[600px] h-[600px] opacity-[0.02] animate-pulse">
+            <Logo width={600} height={600} />
           </div>
-          <div className="gradient-text text-2xl font-bold font-display">FreaQ</div>
-          <div className="text-text-secondary text-sm mt-2">Loading trading platform...</div>
+        </div>
+        <div className="text-center relative z-10 flex flex-col items-center">
+          <div className="relative mb-8 group">
+            <div className="absolute inset-0 bg-accent-cyan/20 blur-xl opacity-50 group-hover:opacity-100 transition-opacity animate-pulse"></div>
+            <Logo width={80} height={80} className="relative z-10 animate-bounce" />
+          </div>
+          <div className="text-3xl font-bold text-white tracking-tight font-display mb-2 drop-shadow-lg">FreaQ</div>
+          <div className="text-accent-cyan text-sm tracking-widest uppercase mb-4 animate-pulse">System Initiating</div>
+          <div className="w-48 h-1 bg-surface-elevated rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-accent-cyan to-accent-blue rounded-full animate-loader"></div>
+          </div>
         </div>
       </div>
     );

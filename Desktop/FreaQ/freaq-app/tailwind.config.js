@@ -48,10 +48,11 @@ module.exports = {
         'pulse-crimson': 'pulse-crimson 2s infinite',
         ticker: 'ticker 30s linear infinite',
         float: 'float 6s ease-in-out infinite',
-        'spin-slow': 'spin 8s linear infinite',
+        'spin-slow': 'spin 12s linear infinite',
         shimmer: 'shimmer 2s infinite',
         'count-up': 'count-up 0.5s ease-out',
         'liquid-ripple': 'liquid-ripple 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        'loader': 'loader 2s ease-in-out infinite',
       },
       keyframes: {
         'pulse-cyan': {
@@ -77,6 +78,11 @@ module.exports = {
         'liquid-ripple': {
           '0%': { transform: 'scale(0.95)', opacity: '0.8', background: 'rgba(255,255,255,0.1)' },
           '100%': { transform: 'scale(1)', opacity: '1', background: 'transparent' },
+        },
+        'loader': {
+          '0%': { width: '0%', marginLeft: '0%' },
+          '50%': { width: '100%', marginLeft: '0%' },
+          '100%': { width: '0%', marginLeft: '100%' },
         }
       },
       backgroundImage: {
