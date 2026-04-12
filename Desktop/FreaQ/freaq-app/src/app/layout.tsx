@@ -21,9 +21,6 @@ export const metadata: Metadata = {
     title: 'FreaQ - Global HFT Trading Platform',
     description: 'Real-time HFT monitoring across all world exchanges.',
   },
-  icons: {
-    icon: '/favicon.ico',
-  },
   viewport: 'width=device-width, initial-scale=1',
 };
 

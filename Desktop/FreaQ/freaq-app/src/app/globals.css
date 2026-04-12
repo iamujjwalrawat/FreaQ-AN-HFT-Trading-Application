@@ -5,19 +5,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
 
 :root {
-  --background: #000000;
-  --surface: rgba(28, 28, 30, 0.65);
-  --surface-elevated: rgba(44, 44, 46, 0.65);
-  --border: rgba(255, 255, 255, 0.1);
-  --accent-green: #30d158;
-  --accent-red: #ff453a;
-  --accent-blue: #0a84ff;
-  --accent-cyan: #64d2ff;
-  --accent-yellow: #ffd60a;
-  --accent-purple: #bf5af2;
-  --text-primary: #f5f5f7;
-  --text-secondary: #86868b;
-  --text-muted: #515154;
+  --background: #0B0E14;
+  --surface: rgba(11, 14, 20, 0.45);
+  --surface-elevated: rgba(25, 30, 40, 0.65);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent-green: #00F2FF;
+  --accent-red: #FF0055;
+  --accent-blue: #0088FF;
+  --accent-cyan: #00F2FF;
+  --accent-yellow: #FFD60A;
+  --accent-purple: #BF5AF2;
+  --text-primary: #FFFFFF;
+  --text-secondary: #8A94A6;
+  --text-muted: #4A5568;
 }
 
 * {
@@ -36,7 +36,7 @@ body {
   background-color: var(--background);
   color: var(--text-primary);
   /* Apple uses San Francisco, Inter is the best web equivalent */
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "JetBrains Mono", "Space Grotesk", sans-serif;
   overflow-x: hidden;
   letter-spacing: -0.015em;
 }
@@ -60,54 +60,59 @@ body {
   background: var(--text-secondary);
 }
 
-/* Price tick animations */
+/* Price tick animations - Liquid Motion Ripple Effect */
 @keyframes tick-up {
-  0% { background-color: rgba(48, 209, 88, 0.2); }
-  100% { background-color: transparent; }
+  0% { background-color: rgba(0, 242, 255, 0.2); transform: scale(0.98); }
+  50% { background-color: rgba(0, 242, 255, 0.1); transform: scale(1.01); box-shadow: 0 0 10px rgba(0,242,255,0.4); }
+  100% { background-color: transparent; transform: scale(1); }
 }
 
 @keyframes tick-down {
-  0% { background-color: rgba(255, 69, 58, 0.2); }
-  100% { background-color: transparent; }
+  0% { background-color: rgba(255, 0, 85, 0.2); transform: scale(0.98); }
+  50% { background-color: rgba(255, 0, 85, 0.1); transform: scale(1.01); box-shadow: 0 0 10px rgba(255,0,85,0.4); }
+  100% { background-color: transparent; transform: scale(1); }
 }
 
 .price-up {
-  animation: tick-up 0.5s ease-out;
+  animation: tick-up 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   color: var(--accent-green) !important;
 }
 
 .price-down {
-  animation: tick-down 0.5s ease-out;
+  animation: tick-down 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   color: var(--accent-red) !important;
 }
 
-/* Apple Pro Glassmorphism */
+/* Apple Pro Glassmorphism & Liquid Glass */
 .glass {
   background: var(--surface);
-  backdrop-filter: saturate(180%) blur(40px);
-  -webkit-backdrop-filter: saturate(180%) blur(40px);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
   border: 1px solid var(--border);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05); /* soft depth */
+  border-radius: 12px;
 }
 
 .glass-light {
   background: var(--surface-elevated);
-  backdrop-filter: saturate(180%) blur(40px);
-  -webkit-backdrop-filter: saturate(180%) blur(40px);
+  backdrop-filter: saturate(180%) blur(32px);
+  -webkit-backdrop-filter: saturate(180%) blur(32px);
   border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05); /* soft depth */
+  border-radius: 12px;
 }
 
 /* Remove cyberpunk glows, keep it clean Apple style */
-.glow-green { box-shadow: none; }
-.glow-red { box-shadow: none; }
-.glow-blue { box-shadow: none; }
-.glow-cyan { box-shadow: none; }
+.glow-green { box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
+.glow-red { box-shadow: 0 0 15px rgba(255, 0, 85, 0.2); }
+.glow-blue { box-shadow: 0 0 15px rgba(0, 136, 255, 0.2); }
+.glow-cyan { box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
 
 /* Grid background */
 .grid-bg {
   background-image: 
-    linear-gradient(rgba(0, 136, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 

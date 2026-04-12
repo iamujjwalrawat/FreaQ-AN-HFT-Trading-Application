@@ -11,6 +11,7 @@ import NewsPanel from './NewsPanel';
 import AIAssistant from './AIAssistant';
 import Portfolio from './Portfolio';
 import SmartInvest from './SmartInvest';
+import Logo from '@/components/Logo';
 
 type Tab = 'overview' | 'trading' | 'portfolio' | 'smart' | 'ai';
 
@@ -97,7 +98,7 @@ export default function Dashboard() {
               ☰
             </button>
             <div className="flex items-center gap-2">
-              <span className="text-lg">⚡</span>
+              <Logo width={28} height={28} className="text-accent-cyan cursor-pointer transition-all hover:scale-105" />
               <span className="font-bold gradient-text font-display text-lg">FreaQ</span>
             </div>
             <div className="hidden sm:flex items-center gap-1 text-xs text-accent-green">

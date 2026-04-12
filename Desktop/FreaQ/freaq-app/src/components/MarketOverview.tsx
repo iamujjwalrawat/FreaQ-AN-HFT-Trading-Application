@@ -98,7 +98,7 @@ export default function MarketOverview({ selectedSymbol, onSelectSymbol }: Props
             Real-time data
           </div>
         </div>
-        
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
           {GLOBAL_MARKETS.map((market, i) => (
             <div

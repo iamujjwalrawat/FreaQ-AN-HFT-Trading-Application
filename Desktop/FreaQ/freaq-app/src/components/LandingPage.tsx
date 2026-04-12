@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 
 const TICKER_ITEMS = [
   { symbol: 'AAPL', price: '175.48', change: '+2.14%', positive: true },
@@ -132,7 +133,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="glass rounded-2xl px-6 py-3 flex items-center justify-between border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-accent-blue to-accent-cyan rounded-lg flex items-center justify-center text-lg">⚡</div>
+              <Logo width={36} height={36} className="text-accent-cyan cursor-pointer transition-all hover:scale-105" />
               <span className="text-xl font-bold gradient-text font-display">FreaQ</span>
               <span className="hidden sm:flex items-center gap-1 text-xs text-accent-green ml-2">
                 <span className="w-1.5 h-1.5 bg-accent-green rounded-full live-dot"></span>
@@ -144,6 +145,7 @@ export default function LandingPage() {
               <a href="#exchanges" className="hover:text-text-primary transition-colors">Exchanges</a>
               <a href="#features" className="hover:text-text-primary transition-colors">Features</a>
               <a href="#simulation" className="hover:text-text-primary transition-colors">Simulation</a>
+              <Link href="/contact" className="hover:text-text-primary transition-colors">Contact</Link>
               <a href="https://github.com" target="_blank" className="hover:text-text-primary transition-colors">GitHub</a>
             </div>
 
